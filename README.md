@@ -1,1 +1,1 @@
-# LinkAcademy
+# javascript-training

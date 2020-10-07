@@ -1,34 +1,51 @@
-
-class Car {
-    constructor(make, model, year, color, maxSpeed) {
-        this.make = make;
-        this.model = model;
-        this.year = year;
-        this.color = color;
-        this.maxSpeed = maxSpeed;
-        this.started = false;
-        this.mileage = 0;
+function Car(make, tankMax, cons) {
+  this.make = make;
+  this.tankMax = tankMax;
+  this.tank = 0;
+  this.cons = cons;
+  this.fillTank = function(quantity) {
+    if(this.tank + quantity > this.tankMax) {
+      return;
     }
-    drive(distance) {
-        this.mileage += distance;
+    this.tank += quantity;
+  };
+  this.run = function(distance) {
+    if (this.tank < distance * this.cons / 100) {
+      return;
     }
-    start() {
-        this.started = true;
-    }
-    stop() {
-        this.started = false;
-    }
+    this.tank -= distance * this.cons / 100;
+  };
 }
 
-var myFord = new Car("Ford", "Mondeo", 2016, "black", 210);
-var myNationalCar = new Car("Dacia", "Logan", 2020, "white", 170);
+Car.prototype.milesToRun = function() {
+    return this.tank / this.cons * 100;
+  };
 
-myNationalCar.drive(100);
-myFord.drive(120);
-myFord.drive(100);
+var chevy = new Car("Chevy", 150, 25);
+var honda = new Car("Honda", 60, 4.2);
+var mustang = new Car("Mustang", 120, 35);
 
-console.log(myFord.mileage);
+var mustang2 = Object.assign({}, mustang);
+console.log(mustang2);
 
-var fordCopy = Object.assign({}, myFord);
+chevy.color = new String("blue");
+console.log(chevy.color);
+chevy.fillTank(60);
+console.log(chevy.tank);
+chevy.run(200);
+console.log(chevy.milesToRun());
+console.log(chevy.tank);
 
-console.log(fordCopy);
+var a = [1,2,3,4,5,6,7,8,9];
+var b = [20, 30, 40];
+
+Array.prototype.sum = function() {
+  var sum = 0;
+  for(var i=0; i<this.length; i++) {
+    sum += this[i];
+  }
+  return sum;
+};
+
+console.log(a.sum());
+console.log(b.sum());
